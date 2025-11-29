@@ -25,4 +25,19 @@ class UserModel extends Bdd
 
   return $users->fetch();
  }
+ public function add(User $user): void
+    {
+        $stmt = $this->co->prepare(
+            'INSERT INTO Users (prenom, nom, email, role,  motdepasse)
+             VALUES (:prenom, :nom, :email, :role, :motdepasse)'
+        );
+
+        $stmt->execute([
+            'prenom' => $user->getPrenom(),
+            'nom' => $user->getNom(),
+            'email' => $user->getEmail(),
+            'role' => $user->getRole(),
+            'motdepasse' => $user->getPwd(),
+        ]);
+    }
 }

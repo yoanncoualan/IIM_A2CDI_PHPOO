@@ -3,7 +3,10 @@ class User
 {
  private int $id;
  private string $email;
- private string $pwd;
+ private string $motdepasse;
+ private string $prenom;
+ private string $nom;
+ private string $role;
 
  public function getId(): int
  {
@@ -20,13 +23,43 @@ class User
   return $this->email;
  }
 
- public function setPwd(string $pwd): self
+ public function setPwd(string $motdepasse): self
  {
-  $this->pwd = $pwd;
+  $this->motdepasse = $motdepasse;
   return $this;
  }
  public function getPwd(): string
  {
-  return $this->pwd;
+  return $this->motdepasse;
  }
+ public function setPrenom(string $prenom): self
+ {
+  $this->prenom = $prenom;
+  return $this;
+ }
+ public function getPrenom(): string
+ {
+  return $this->prenom;
+ }
+
+ public function setNom(string $nom): self
+ {
+  $this->nom = $nom;
+  return $this;
+ }
+ public function getNom(): string
+ {
+  return $this->nom;
+ }
+
+ public function setRole(string $role): self
+ {
+  $this->role = $role;
+  return $this;
+ }
+ public function getRole(): string
+ {
+  return $this->role;
+ }
+
 }

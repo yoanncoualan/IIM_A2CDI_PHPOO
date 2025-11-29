@@ -33,4 +33,14 @@ class UserController
   // Rendu avec layout
   $this->renderView('user/one', $data);
  }
+
+    public function one(int $id): void {
+        $this->findOneById($id);
+    }
+
+    public function register(): void {
+
+    // Rendu avec layout
+    $this->renderView('user/register', );
+    }
 }
