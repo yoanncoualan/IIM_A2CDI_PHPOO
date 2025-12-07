@@ -18,4 +18,9 @@ abstract class Bdd
    $_ENV['db_pwd']
   );
  }
+
+ public function getCo(): PDO
+ {
+  return $this->co;
+ }
 }

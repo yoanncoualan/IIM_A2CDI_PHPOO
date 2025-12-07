@@ -5,16 +5,10 @@ class UserController
 {
  use Render;
  
-   
+   // page liste des utilisateurs admin ou usage interne 
     public function index(): void
     {
         session_start();
-
-      
-        // if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
-        //     header("Location: /user/login");
-        //     exit;
-        // }
 
         $userModel = new UserModel();
         $users = $userModel->getAllUsers();
@@ -25,7 +19,7 @@ class UserController
         ], 'index');
     }
 
-
+    // inscription
     public function register(): void
     {
         if ($_POST) {
@@ -45,7 +39,7 @@ class UserController
         ], 'index');
     }
 
- 
+    //  login
     public function login(): void
     {
         session_start();
@@ -76,8 +70,8 @@ class UserController
             'error' => $error
         ], 'index');
     }
-
- 
+    
+    // deconnexion
     public function logout(): void
     {
         session_start();
