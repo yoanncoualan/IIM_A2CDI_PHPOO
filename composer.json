@@ -1,0 +1,17 @@
+{
+    "name": "julie/aoo-project",
+    "autoload": {
+        "psr-4": {
+            "Julie\\AooProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "JulienC7",
+            "email": "julien.clavier95@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

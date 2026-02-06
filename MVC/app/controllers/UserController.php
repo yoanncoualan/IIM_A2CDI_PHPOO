@@ -4,33 +4,86 @@ require_once './app/utils/Render.php';
 class UserController
 {
  use Render;
- public function findAll(): void
- {
-  $userModel = new UserModel();
-  $users = $userModel->findAll();
+ 
+   // page liste des utilisateurs admin ou usage interne 
+    public function index(): void
+    {
+        session_start();
 
-  // Prépatation du tableau à envoyer au layout
-  $data = [
-   'title' => 'Liste des utilisateurs',
-   'users' => $users
-  ];
+        $userModel = new UserModel();
+        $users = $userModel->getAllUsers();
 
-  // Rendu avec layout
-  $this->renderView('user/all', $data);
- }
+        $this->renderView('user/index', [
+            'title' => 'Liste des utilisateurs',
+            'users' => $users
+        ], 'index');
+    }
 
- public function findOneById(int $id): void
- {
-  $userModel = new UserModel();
-  $user = $userModel->findOneById($id);
+    // inscription
+    public function register(): void
+    {
+        if ($_POST) {
+            $userModel = new UserModel();
+            $success = $userModel->createUser($_POST);
 
-  // Prépatation du tableau à envoyer au layout
-  $data = [
-   'title' => 'Un utilisateur',
-   'user' => $user
-  ];
+            if ($success) {
+                header("Location: /user/login");
+                exit;
+            }
 
-  // Rendu avec layout
-  $this->renderView('user/one', $data);
- }
+            $error = "Erreur lors de l'inscription.";
+        }
+
+        $this->renderView('user/register', [
+            'error' => $error ?? null
+        ], 'index');
+    }
+
+    //  login
+    public function login(): void
+    {
+        session_start();
+        $error = null;
+
+        if ($_POST) {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            $userModel = new UserModel();
+            $user = $userModel->logUser($email, $password);
+
+            if ($user) {
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['prenom'] = $user['prenom'];
+                $_SESSION['nom'] = $user['nom'];
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['role'] = $user['role'];
+
+                header("Location: /");
+                exit;
+            } else {
+                $error = "Identifiants incorrects";
+            }
+        }
+
+        $this->renderView('user/login', [
+            'error' => $error
+        ], 'index');
+    }
+    
+    // deconnexion
+    public function logout(): void
+    {
+        session_start();
+        session_destroy();
+        header("Location: /user/login");
+        exit;
+    }
+
+
+        
+
+    
+
+   
 }
